@@ -23,28 +23,17 @@ function output(text) {
 function getFile(file) {
 	fakeAjax(file,function(text){
 		// what do we do here?
-		//console.log('counter = ', counter)
+		let toPrint,toPrintSet
 		let fileNum = file[4]
 		store = [...store,{fileNum,text}];
-		// console.log('before reduce')
-		// store.map(x => console.log(x.fileNum))
-		//console.log('__________')
-		store
-			.sort((a,b) => a.fileNum-b.fileNum)
-			.reduce((acc,x,i) => {
-				// console.log('fileNum ===', x.fileNum, ', counter = ',counter)
-				// console.log('fileNum == counter ', x.fileNum == counter)
-				console.log('reducing ',i+1,' of ',acc.length)
-				if (x.fileNum == counter) {
-					// addTextToHTML(JSON.stringify(x))
-					acc.splice(i,1)
-					counter += 1;
-				}
-				// console.log('after reduce')
-				// store.map(x => console.log(x.fileNum))
-				// console.log('__________')
-				return acc
-			}, store)
+		while (store.length !==0) {
+			store.sort((a,b) => a.fileNum-b.fileNum)
+			toPrint = store.filter(x => x.fileNum <= counter);
+			//toPrint.map(x => addTextToHTML(x.text))
+			counter += toPrint.length
+			toPrintSet = new Set(toPrint);
+			store =  store.filter(x => !toPrintSet.has(x))
+		}
 
 		
 	});
