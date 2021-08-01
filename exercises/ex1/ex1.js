@@ -22,12 +22,13 @@ function output(text) {
 
 function getFile(file) {
 	fakeAjax(file,function(text){
-		// what do we do here?
+		// current fileNum
 		let fileNum = file[4];
 
-		// store the files in an array
+		// add file to store and sort it
 		store = [...store,{fileNum,text}].sort((a,b) => a.fileNum-b.fileNum);
 		//console.log(JSON.stringify(store))
+
 		// pick the first ordered element from store
 		nextFileNum = store[0].fileNum;
 
@@ -39,7 +40,11 @@ function getFile(file) {
 			//console.log(JSON.stringify(store))
 			// ... print it.
 			addTextToHTML(currentFile.text)
+
+			// if there's a next file in store, set it to nextFile
 			nextFileNum = store.length > 0 ? store[0].fileNum : -1;
+
+			// we need the next file in the sequence
 			++expectedFileNum;
 		}
 	});
