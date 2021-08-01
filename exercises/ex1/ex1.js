@@ -27,7 +27,7 @@ function getFile(file) {
 
 		// store the files in an array
 		store = [...store,{fileNum,text}].sort((a,b) => a.fileNum-b.fileNum);
-		
+		//console.log(JSON.stringify(store))
 		// pick the first ordered element from store
 		nextFileNum = store[0].fileNum;
 
@@ -36,8 +36,9 @@ function getFile(file) {
 			// make it the currentFile and take it off the array
 			[currentFile, ...rest] = store
 			store = rest;
+			//console.log(JSON.stringify(store))
 			// ... print it.
-			// addTextToHTML(currentFile.text)
+			addTextToHTML(currentFile.text)
 			nextFileNum = store.length > 0 ? store[0].fileNum : -1;
 			++expectedFileNum;
 		}
