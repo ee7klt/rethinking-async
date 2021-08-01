@@ -23,19 +23,24 @@ function output(text) {
 function getFile(file) {
 	fakeAjax(file,function(text){
 		// what do we do here?
-		let toPrint,toPrintSet
-		let fileNum = file[4]
-		store = [...store,{fileNum,text}];
-		while (store.length !==0) {
-			store.sort((a,b) => a.fileNum-b.fileNum)
-			toPrint = store.filter(x => x.fileNum <= counter);
-			//toPrint.map(x => addTextToHTML(x.text))
-			counter += toPrint.length
-			toPrintSet = new Set(toPrint);
-			store =  store.filter(x => !toPrintSet.has(x))
-		}
+		let fileNum = file[4];
 
+		// store the files in an array
+		store = [...store,{fileNum,text}].sort((a,b) => a.fileNum-b.fileNum);
 		
+		// pick the first ordered element from store
+		nextFileNum = store[0].fileNum;
+
+		// While the next file is one more than the current ...
+		while (nextFileNum == expectedFileNum) {
+			// make it the currentFile and take it off the array
+			[currentFile, ...rest] = store
+			store = rest;
+			// ... print it.
+			// addTextToHTML(currentFile.text)
+			nextFileNum = store.length > 0 ? store[0].fileNum : -1;
+			++expectedFileNum;
+		}
 	});
 }
 
@@ -50,7 +55,8 @@ function addTextToHTML(text) {
 // request all files at once in "parallel"
 
 let store = [];
-let counter = 1;
+let nextFileNum;  		// fileNum of the next file in store
+let expectedFileNum = 1;  // tracks which file to expect next
 getFile("file1");
 getFile("file2");
 getFile("file3");
