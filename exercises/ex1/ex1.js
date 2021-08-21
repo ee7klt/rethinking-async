@@ -37,14 +37,14 @@ function getFile(file) {
 			// make it the currentFile and take it off the array
 			[currentFile, ...rest] = store
 			store = rest;
-			//console.log(JSON.stringify(store))
+	
 			// ... print it.
 			addTextToHTML(currentFile.text)
 
 			// if there's a next file in store, set it to nextFile
 			nextFileNum = store.length > 0 ? store[0].fileNum : -1;
 
-			// we need the next file in the sequence
+			// next file in the sequence
 			++expectedFileNum;
 		}
 	});
