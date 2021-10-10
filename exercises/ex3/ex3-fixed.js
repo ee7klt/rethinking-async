@@ -21,7 +21,8 @@ function output(text) {
 
 function getFile(file) {
 	return new Promise(function(resolve){
-		fakeAjax(file,resolve);
+		// need to make fake ajax call right away
+		fakeAjax(file,resolve);   // resolve is a function
 	});
 }
 
@@ -35,7 +36,7 @@ var p3 = getFile("file3");
 // but only once previous rendering
 // is done.
 p1
-.then(output)
+.then(output)   // does output == resolve??
 .then(function(){
 	return p2;
 })
